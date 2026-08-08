@@ -1,0 +1,663 @@
+{
+  "base": "S Rock XP — Base de Conhecimento Inicial",
+  "cidade": "São Roque/SP",
+  "versao": "1.0",
+  "ultima_atualizacao": "2026-08-08",
+  "roteiros": [
+    {
+      "id": "RV",
+      "nome": "Rota do Vinho",
+      "descricao": "Circuito gratuito de ~10 km pelas Estradas do Vinho e dos Venâncios e Rodovia Quintino de Lima, com mais de 30 vinícolas, adegas, restaurantes e empórios em meio à Mata Atlântica. É o roteiro de maior densidade de experiências bookáveis.",
+      "acesso": "Rodovia Raposo Tavares (km 52–60) ou Castello Branco (km 54)",
+      "tempo_sugerido": "Meio dia a dia inteiro",
+      "curadoria": {
+        "owner": "prefeitura | parceiro",
+        "status": "ativo"
+      }
+    },
+    {
+      "id": "RC",
+      "nome": "Roteiro do Centro",
+      "descricao": "Centro histórico de São Roque: Igreja Matriz (pinturas dos Irmãos Gentili e vitrais), Praça da República, Estação Ferroviária, Centro Cultural Brasital, Centro Comercial do Taboão e o Sítio e Capela de Santo Antônio.",
+      "acesso": "Centro da cidade",
+      "tempo_sugerido": "Meio dia",
+      "curadoria": {
+        "owner": "prefeitura",
+        "status": "ativo"
+      }
+    },
+    {
+      "id": "RS",
+      "nome": "Roteiro do Saboó (Sabuquê)",
+      "descricao": "Rota Turística Saboó & Castello, o circuito da serra: Morro do Saboó, Mirante do Saboó, Recanto da Cascata, Castelo Medieval Brasital, sítios e pousadas. É o roteiro do pôr do sol (sunset) da cidade.",
+      "acesso": "Estrada Turística do Morro do Saboó km 4,5 | Castello km 54 | Raposo km 60",
+      "tempo_sugerido": "Meio dia (ideal no final de tarde)",
+      "curadoria": {
+        "owner": "prefeitura | parceiro",
+        "status": "ativo"
+      }
+    }
+  ],
+  "estabelecimentos": [
+    {
+      "id": "est-goes",
+      "nome": "Vinícola Góes",
+      "tipo": "estabelecimento",
+      "roteiro_id": "RV",
+      "meta": {
+        "endereco": "Estrada do Vinho, 9111 — Canguera, São Roque/SP, CEP 18145-002",
+        "coordenadas": {
+          "lat": -23.5548,
+          "lng": -47.1248
+        },
+        "telefone": "(11) 4711-3500",
+        "whatsapp": "(11) 99787-0588",
+        "horario": "Todos os dias, 9h–18h",
+        "site": "https://www.vinicolagoes.com.br",
+        "fundacao": "1938 — família de imigrantes portugueses",
+        "infraestrutura": [
+          "loja 400m²",
+          "Restaurante Vale do Vinho",
+          "Wine Bar",
+          "mini shopping",
+          "espaço de eventos",
+          "lago ornamental"
+        ]
+      },
+      "perfis_recomendados": [
+        "amantes_de_vinho",
+        "casais",
+        "familias",
+        "grupos_60plus",
+        "eventos_corporativos"
+      ],
+      "transacional": {
+        "enabled": true,
+        "channels": [
+          {
+            "type": "ecommerce_ingresso",
+            "provider": "wine_locals",
+            "url": "https://www.wine-locals.com",
+            "action": "comprar_ingresso",
+            "status": "live"
+          },
+          {
+            "type": "ecommerce_loja",
+            "url": "https://www.vinicolagoes.com.br",
+            "action": "comprar_vinhos",
+            "status": "live"
+          },
+          {
+            "type": "whatsapp",
+            "number": "+5511997870588",
+            "action": "agendar_experiencia",
+            "status": "live"
+          }
+        ],
+        "booking_flow": "redirect",
+        "payment": "online"
+      },
+      "curadoria": {
+        "owner": "estabelecimento",
+        "last_review": "2026-08-08",
+        "review_cycle_days": 90,
+        "status": "ativo"
+      }
+    },
+    {
+      "id": "est-olivardo",
+      "nome": "Quinta do Olivardo",
+      "tipo": "estabelecimento",
+      "roteiro_id": "RV",
+      "meta": {
+        "endereco": "Estrada do Vinho, km 4 — São Roque/SP",
+        "telefone": "(11) 4711-1100",
+        "whatsapp": "(11) 98856-3222",
+        "whatsapp_pousada": "(11) 99027-7685",
+        "site": "https://quintadoolivardo.com.br/saoroque/",
+        "perfil": "Casa portuguesa (atmosfera da Ilha da Madeira); gastronomia portuguesa tradicional; arvorismo, tirolesa, fazendinha, pedalinho; pousada com chalés e tonéis de vinho; espaço Senhor Vinho",
+        "reputacao": "+27 mil avaliações Google; 5 anos consecutivos de 'excelência' TripAdvisor"
+      },
+      "perfis_recomendados": [
+        "familias",
+        "casais",
+        "gastronomos",
+        "grupos_60plus",
+        "hospedagem"
+      ],
+      "transacional": {
+        "enabled": true,
+        "channels": [
+          {
+            "type": "whatsapp",
+            "number": "+5511988563222",
+            "action": "reservar_mesa",
+            "status": "live"
+          },
+          {
+            "type": "whatsapp",
+            "number": "+5511990277685",
+            "action": "reservar_pousada",
+            "status": "live"
+          },
+          {
+            "type": "telefone",
+            "number": "+551147111100",
+            "action": "reservar",
+            "status": "live"
+          }
+        ],
+        "booking_flow": "agency_handoff",
+        "payment": "onsite"
+      },
+      "curadoria": {
+        "owner": "estabelecimento",
+        "last_review": "2026-08-08",
+        "review_cycle_days": 90,
+        "status": "ativo"
+      }
+    },
+    {
+      "id": "est-bella-aurora",
+      "nome": "Vinícola Bela Aurora",
+      "tipo": "estabelecimento",
+      "roteiro_id": "RV",
+      "meta": {
+        "endereco": "Rodovia Raposo Tavares, km 56,5 — São Roque/SP",
+        "coordenadas": {
+          "lat": -23.54296,
+          "lng": -47.12543
+        },
+        "horario": "Diariamente 8h–18h; sáb, dom e feriados até 19h",
+        "site": "http://www.bellaaurora.com.br",
+        "perfil": "Fundada nos anos 1920 por imigrantes portugueses, produção comercial desde 1932; cantina em tonel de madeira de 120 mil litros; passeio por sítio, plantações e fábrica com degustação de vinhos, queijos e salames",
+        "destaque": "Degustação guiada de vinhos, queijos e salames; ponto de partida clássico do Roteiro do Vinho"
+      },
+      "perfis_recomendados": [
+        "amantes_de_vinho",
+        "familias",
+        "grupos_60plus"
+      ],
+      "transacional": {
+        "enabled": true,
+        "channels": [
+          {
+            "type": "telefone",
+            "number": "+551147110000",
+            "action": "visita_agendada",
+            "status": "placeholder"
+          },
+          {
+            "type": "whatsapp",
+            "number": "",
+            "action": "visita_agendada",
+            "status": "pendente_curadoria"
+          }
+        ],
+        "booking_flow": "agency_handoff",
+        "payment": "onsite"
+      },
+      "curadoria": {
+        "owner": "raiz_brasil",
+        "last_review": "2026-08-08",
+        "review_cycle_days": 90,
+        "status": "ativo",
+        "notes": "Contato de WhatsApp pendente de confirmação pela curadoria Raiz Brasil"
+      }
+    },
+    {
+      "id": "est-palmeiras",
+      "nome": "Vinícola Palmeiras",
+      "tipo": "estabelecimento",
+      "roteiro_id": "RV",
+      "meta": {
+        "endereco": "Estrada do Vinho, km 10 — São Roque/SP (última parada do circuito)",
+        "coordenadas": {
+          "lat": -23.6121,
+          "lng": -47.1565
+        },
+        "horario": "Diariamente, 9h–18h",
+        "site": "http://www.vinhospalmeiras.com.br",
+        "perfil": "Vinícola mais antiga de São Roque (desde 1928); degustações, gastronomia, cafeteria e doces, varejo de vinhos e produtos coloniais",
+        "destaque": "Última parada da Rota do Vinho; ideal para compras de vinhos e produtos coloniais"
+      },
+      "perfis_recomendados": [
+        "amantes_de_vinho",
+        "familias",
+        "compras_locais"
+      ],
+      "transacional": {
+        "enabled": true,
+        "channels": [
+          {
+            "type": "telefone",
+            "number": "",
+            "action": "visita_agendada",
+            "status": "pendente_curadoria"
+          }
+        ],
+        "booking_flow": "agency_handoff",
+        "payment": "onsite"
+      },
+      "curadoria": {
+        "owner": "raiz_brasil",
+        "last_review": "2026-08-08",
+        "review_cycle_days": 90,
+        "status": "ativo",
+        "notes": "Telefone e WhatsApp a confirmar pela curadoria Raiz Brasil"
+      }
+    },
+    {
+      "id": "est-santo-antonio",
+      "nome": "Sítio e Capela de Santo Antônio",
+      "tipo": "ponto_turistico",
+      "roteiro_id": "RC",
+      "meta": {
+        "endereco": "Estrada Mário de Andrade, km 8 — São Roque/SP (estrada asfaltada, ~8 km do centro)",
+        "horario": "Sábados, domingos e feriados, 9h30–16h",
+        "aviso_clima": "Fechado em dias de chuva (espaço ao ar livre sob supervisão do IPHAN)",
+        "entrada": "Gratuita",
+        "infraestrutura": [
+          "estacionamento",
+          "sanitários",
+          "lojinha de souvenir"
+        ],
+        "historia": "Construído em 1681; pertenceu a Fernão Paes de Barros (Barão de Piratininga) e a Mário de Andrade, que doou o conjunto ao IPHAN em 1947; arquitetura em taipa de pilão estudada por Lucio Costa",
+        "visita_monitorada": "Disponível para excursões mediante agendamento: Turismo São Roque (11) 4784-9630 / turismo@saoroque.sp.gov.br"
+      },
+      "perfis_recomendados": [
+        "historia_cultura",
+        "grupos_60plus",
+        "religioso",
+        "familias",
+        "grupos_escolares"
+      ],
+      "transacional": {
+        "enabled": false,
+        "channels": [
+          {
+            "type": "telefone",
+            "number": "+551147849630",
+            "action": "agendar_visita_monitorada_grupo",
+            "status": "live"
+          }
+        ],
+        "booking_flow": "agency_handoff",
+        "payment": "nao_aplicavel"
+      },
+      "curadoria": {
+        "owner": "prefeitura",
+        "last_review": "2026-08-08",
+        "review_cycle_days": 90,
+        "status": "ativo"
+      }
+    }
+  ],
+  "experiencias": [
+    {
+      "id": "exp-wine-run",
+      "nome": "Wine Run — Corrida do Vinho",
+      "tipo": "experiencia",
+      "roteiro_id": "RV",
+      "estabelecimento_id": "est-goes",
+      "descricao": "Corrida pelos vinhedos da Vinícola Góes, realizada duas vezes ao ano (edições Summer e Winter). Após a prova, os atletas desfrutam de café da manhã harmonizado com vinhos da casa. Experiência que combina esporte, natureza e enoturismo.",
+      "sazonalidade": "2 edições por ano (verão e inverno); datas fixas divulgadas com antecedência",
+      "perfis_recomendados": [
+        "amantes_de_vinho",
+        "grupos",
+        "bem_estar",
+        "casais_ativos"
+      ],
+      "restricoes": [
+        "exige atividade física moderada",
+        "venda de álcool apenas 18+"
+      ],
+      "transacional": {
+        "enabled": true,
+        "channels": [
+          {
+            "type": "site_evento",
+            "url": "",
+            "action": "inscricao",
+            "status": "pendente_curadoria"
+          }
+        ],
+        "booking_flow": "redirect",
+        "payment": "online"
+      },
+      "curadoria": {
+        "owner": "estabelecimento",
+        "last_review": "2026-08-08",
+        "status": "ativo",
+        "notes": "URL de inscrição a capturar pela curadoria a cada edição"
+      }
+    },
+    {
+      "id": "exp-colheita-ao-luar",
+      "nome": "Colheita ao Luar",
+      "tipo": "experiencia",
+      "roteiro_id": "RV",
+      "estabelecimento_id": "est-goes",
+      "descricao": "Noite inesquecível em meio aos vinhedos: recepção com antepastos e espumante, visita guiada ao parreiral de uvas finas, aula do enólogo sobre a técnica de dupla poda, colheita sensorial noturna, jantar à luz de velas harmonizado com rótulos premiados, degustação exclusiva de lançamento e luau na fogueira com música ao vivo e open bar.",
+      "sazonalidade": "Edições limitadas (ex.: 25–26/jul e 01–02/ago); vender como evento premium de ingressos",
+      "perfis_recomendados": [
+        "casais",
+        "amantes_de_vinho",
+        "grupos",
+        "gastronomia_conforto",
+        "experiencia_diferente"
+      ],
+      "restricoes": [
+        "terreno de vinhedo (avaliar mobilidade para 60+)",
+        "venda de álcool apenas 18+"
+      ],
+      "transacional": {
+        "enabled": true,
+        "channels": [
+          {
+            "type": "ecommerce_ingresso",
+            "provider": "wine_locals",
+            "url": "https://www.wine-locals.com/passeios/colheita-ao-luar-na-vinicola-goes",
+            "action": "comprar_ingresso",
+            "status": "live"
+          },
+          {
+            "type": "whatsapp",
+            "number": "+5511997870588",
+            "action": "agendar_grupo",
+            "status": "live"
+          }
+        ],
+        "booking_flow": "chat_direct",
+        "payment": "online"
+      },
+      "curadoria": {
+        "owner": "estabelecimento",
+        "last_review": "2026-08-08",
+        "status": "ativo"
+      }
+    },
+    {
+      "id": "exp-sunset-sao-roque",
+      "nome": "Sunset de São Roque",
+      "tipo": "experiencia",
+      "roteiro_id": "RS",
+      "estabelecimento_id": null,
+      "descricao": "Experiências de pôr do sol na serra para o final de tarde: contemplação no Morro do Saboó e Mirante do Saboó, decks com DJ em parceiros (ex.: Vila Don Patto) e eventos 'sunset' em vinícolas. O chat deve cruzar o horário do pôr do sol do dia e recomendar chegada 45–60 minutos antes.",
+      "sazonalidade": "Diária (fim de tarde); eventos especiais pontuais",
+      "perfis_recomendados": [
+        "grupos_60plus",
+        "casais",
+        "grupos",
+        "romantismo",
+        "sunset",
+        "experiencia_diferente"
+      ],
+      "restricoes": [
+        "deslocamento até a serra necessário",
+        "pode exigir caminhada curta dependendo do ponto"
+      ],
+      "transacional": {
+        "enabled": true,
+        "channels": [
+          {
+            "type": "agencia_receptiva",
+            "provider": "raiz_brasil",
+            "action": "pacote_sunset",
+            "status": "live"
+          },
+          {
+            "type": "whatsapp",
+            "number": "",
+            "action": "agendar",
+            "status": "pendente_curadoria"
+          }
+        ],
+        "booking_flow": "agency_handoff",
+        "payment": "agency"
+      },
+      "curadoria": {
+        "owner": "raiz_brasil",
+        "last_review": "2026-08-08",
+        "status": "ativo",
+        "notes": "Lista de pontos e parceiros sunset a manter pela Raiz Brasil"
+      }
+    },
+    {
+      "id": "exp-pintura-de-tacas",
+      "nome": "Pintura de Taças com Vinho",
+      "tipo": "experiencia",
+      "roteiro_id": "RV",
+      "estabelecimento_id": null,
+      "descricao": "Experiência artística e sensorial em que o participante usa o vinho como pigmento para criar arte na própria taça, finalizando com a degustação do rótulo utilizado. Combina arte, gastronomia e memória; ideal para grupos, terceira idade e famílias.",
+      "sazonalidade": "Sob demanda mediante agendamento",
+      "perfis_recomendados": [
+        "grupos_60plus",
+        "grupos",
+        "casais",
+        "amantes_de_vinho",
+        "familias",
+        "experiencia_diferente"
+      ],
+      "restricoes": [
+        "venda de álcool apenas 18+",
+        "kits alternativos (suco de uva) para crianças"
+      ],
+      "transacional": {
+        "enabled": true,
+        "channels": [
+          {
+            "type": "agencia_receptiva",
+            "provider": "raiz_brasil",
+            "action": "pacote_sob_demanda",
+            "status": "live"
+          }
+        ],
+        "booking_flow": "agency_handoff",
+        "payment": "agency"
+      },
+      "curadoria": {
+        "owner": "raiz_brasil",
+        "last_review": "2026-08-08",
+        "status": "pendente_curadoria",
+        "notes": "Definir estabelecimento parceiro operacional com a Raiz Brasil"
+      }
+    },
+    {
+      "id": "exp-degustacao-guiada",
+      "nome": "Degustações Guiadas",
+      "tipo": "experiencia",
+      "roteiro_id": "RV",
+      "estabelecimento_id": null,
+      "descricao": "Degustação orientada por sommelier ou enólogo com roteiro de rótulos da casa e dicas de harmonização. Destaques: na Vinícola Góes, 5 rótulos entre vinhos e espumantes com taça de brinde (orientada) e 4 vinhos com queijos e charcutaria mais passeio de Wine Bus (premium harmonizada). Disponível também em Quinta do Olivardo, Bella Aurora e Palmeiras.",
+      "sazonalidade": "Permanente (diária)",
+      "perfis_recomendados": [
+        "amantes_de_vinho",
+        "grupos_60plus",
+        "casais",
+        "grupos",
+        "gastronomia_conforto"
+      ],
+      "restricoes": [
+        "venda de álcool apenas 18+"
+      ],
+      "transacional": {
+        "enabled": true,
+        "channels": [
+          {
+            "type": "ecommerce_ingresso",
+            "provider": "wine_locals",
+            "url": "https://www.wine-locals.com/passeios/degustacao-orientada-na-vinicola-goes",
+            "action": "comprar_ingresso_goes",
+            "status": "live"
+          },
+          {
+            "type": "agencia_receptiva",
+            "provider": "raiz_brasil",
+            "action": "pacote_degutacoes_multi_vinicola",
+            "status": "live"
+          },
+          {
+            "type": "whatsapp",
+            "number": "",
+            "action": "agendar_outros_estabelecimentos",
+            "status": "pendente_curadoria"
+          }
+        ],
+        "booking_flow": "chat_direct",
+        "payment": "online"
+      },
+      "curadoria": {
+        "owner": "estabelecimento | raiz_brasil",
+        "last_review": "2026-08-08",
+        "status": "ativo"
+      }
+    }
+  ],
+  "perfis_publico": [
+    {
+      "id": "perf-60plus",
+      "nome": "Terceira Idade (60+)",
+      "tags": [
+        "grupos_60plus",
+        "acessibilidade",
+        "ritmo_leve",
+        "gastronomia_conforto",
+        "historia_cultura"
+      ]
+    },
+    {
+      "id": "perf-casais",
+      "nome": "Casais",
+      "tags": [
+        "casais",
+        "romantismo",
+        "sunset",
+        "jantares_harmonizados",
+        "hospedagem_charme"
+      ]
+    },
+    {
+      "id": "perf-amantes-vinho",
+      "nome": "Amantes de Vinho",
+      "tags": [
+        "amantes_de_vinho",
+        "sommelier",
+        "rare_vintage",
+        "vindima",
+        "eventos_premium"
+      ]
+    },
+    {
+      "id": "perf-familias",
+      "nome": "Famílias",
+      "tags": [
+        "familias",
+        "kids",
+        "lazer_ao_ar_livre",
+        "piquenique",
+        "fazendinha"
+      ]
+    },
+    {
+      "id": "perf-grupos",
+      "nome": "Grupos e Turmas",
+      "tags": [
+        "grupos",
+        "experiencia_diferente",
+        "musica_ao_vivo",
+        "open_bar",
+        "fotogenico"
+      ]
+    },
+    {
+      "id": "perf-corporativo",
+      "nome": "Corporativo",
+      "tags": [
+        "eventos_corporativos",
+        "estrutura_para_grupos",
+        "harmonizacao",
+        "compras"
+      ]
+    },
+    {
+      "id": "perf-historia",
+      "nome": "História e Religião",
+      "tags": [
+        "historia_cultura",
+        "religioso",
+        "patrimonio"
+      ]
+    },
+    {
+      "id": "perf-gastronomos",
+      "nome": "Gastrônomos",
+      "tags": [
+        "gastronomia_conforto",
+        "degustacoes_guiadas",
+        "rodizio",
+        "gastronomia_europeia"
+      ]
+    }
+  ],
+  "matriz_recomendacao": {
+    "minimo_tags_match": 2,
+    "experiencias": {
+      "exp-wine-run": [
+        "grupos",
+        "amantes_de_vinho",
+        "bem_estar",
+        "casais_ativos"
+      ],
+      "exp-colheita-ao-luar": [
+        "casais",
+        "amantes_de_vinho",
+        "grupos",
+        "gastronomia_conforto",
+        "experiencia_diferente"
+      ],
+      "exp-sunset-sao-roque": [
+        "grupos_60plus",
+        "casais",
+        "grupos",
+        "romantismo",
+        "sunset",
+        "experiencia_diferente"
+      ],
+      "exp-pintura-de-tacas": [
+        "grupos_60plus",
+        "grupos",
+        "casais",
+        "amantes_de_vinho",
+        "familias",
+        "experiencia_diferente"
+      ],
+      "exp-degustacao-guiada": [
+        "amantes_de_vinho",
+        "grupos_60plus",
+        "casais",
+        "grupos",
+        "gastronomia_conforto"
+      ],
+      "est-santo-antonio": [
+        "historia_cultura",
+        "grupos_60plus",
+        "religioso",
+        "familias",
+        "grupos_escolares"
+      ]
+    }
+  },
+  "curadoria": {
+    "agencia_receptiva": "Raiz Brasil",
+    "anos_de_mercado": 27,
+    "papel": "curadora-mestre: aprova novos registros, define pacotes, valida contatos transacionais e negocia condições para grupos",
+    "niveis_confianca": [
+      "oficial",
+      "parceiro",
+      "curadoria"
+    ],
+    "review_cycle_padrao_dias": 90,
+    "fluxo_agendamento_grupos_60plus": "agency_handoff"
+  }
+}

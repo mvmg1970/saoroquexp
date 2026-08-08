@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SAOROQUE_XP</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">SAOROQUE_XP</p>
+        <h1>Webchat de turismo inteligente para São Roque/SP</h1>
+        <p class="subtitle">Pergunte sobre roteiros, vinícolas, sunset, experiências e pacotes. O chat responde com curadoria e sugere os melhores caminhos.</p>
+      </div>
+      <div class="status-card">
+        <span class="pill" id="mode-pill">Modo local</span>
+        <strong id="status-title">Pronto para conversar</strong>
+        <small id="status-subtitle">Base inicial carregada do conhecimento local.</small>
+      </div>
+    </header>
+
+    <section class="quick-actions" aria-label="Atalhos">
+      <button data-q="Sou 60+ e gosto de vinho">60+ e vinho</button>
+      <button data-q="Quero um roteiro para casal no sunset">Casal + sunset</button>
+      <button data-q="Tenho família e quero passeio leve">Família</button>
+      <button data-q="Quais experiências de vinho você recomenda?">Vinho</button>
+      <button data-q="Quero história e cultura no centro">Centro histórico</button>
+    </section>
+
+    <section class="chat-card">
+      <div class="chat-log" id="chat-log" aria-live="polite"></div>
+
+      <form class="composer" id="composer">
+        <input id="message" name="message" type="text" placeholder="Digite sua pergunta sobre São Roque..." autocomplete="off" />
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+
+    <section class="info-grid">
+      <article>
+        <h2>Como este MVP funciona</h2>
+        <ul>
+          <li>curadoria por perfil</li>
+          <li>até 3 recomendações por resposta</li>
+          <li>handoff humano quando houver intenção comercial</li>
+        </ul>
+      </article>
+      <article>
+        <h2>Perfis ativos</h2>
+        <ul id="profiles-list"></ul>
+      </article>
+    </section>
+  </main>
+
+  <template id="msg-template">
+    <div class="msg">
+      <div class="bubble"></div>
+    </div>
+  </template>
+
+  <script src="/app.js"></script>
+</body>
+</html>

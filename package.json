@@ -1,0 +1,11 @@
+{
+  "name": "saoroque-xp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node -c server.js"
+  }
+}
