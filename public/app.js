@@ -8,12 +8,29 @@ const statusSubtitle = document.getElementById('status-subtitle');
 
 let knowledge = null;
 
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function renderMarkup(text) {
+  const escaped = escapeHtml(text);
+  const withLinks = escaped.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noreferrer noopener">$1</a>');
+  const withBold = withLinks.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  const withItalic = withBold.replace(/(^|[^*])\*(?!\s)(.+?)(?<!\s)\*(?!\*)/g, '$1<em>$2</em>');
+  return withItalic.replace(/\n/g, '<br>');
+}
+
 function addMessage(role, text) {
   const row = document.createElement('div');
   row.className = `msg ${role}`;
   const bubble = document.createElement('div');
   bubble.className = 'bubble';
-  bubble.innerHTML = text.replace(/\n/g, '<br>');
+  bubble.innerHTML = renderMarkup(text);
   row.appendChild(bubble);
   log.appendChild(row);
   log.scrollTop = log.scrollHeight;
@@ -23,6 +40,19 @@ async function loadKnowledge() {
   const res = await fetch('/api/knowledge');
   knowledge = await res.json();
   profilesList.innerHTML = knowledge.perfis_publico.map(p => `<li><strong>${p.nome}</strong><br><small>${p.tags.join(' · ')}</small></li>`).join('');
+}
+
+function updateStatus(data) {
+  if (data.source_mode === 'web') {
+    modePill.textContent = 'Modo online';
+    statusTitle.textContent = 'Resposta buscada na web';
+    statusSubtitle.textContent = 'Fontes confiáveis usadas para complementar a base local.';
+    return;
+  }
+
+  modePill.textContent = 'Modo local';
+  statusTitle.textContent = data.recommendations?.length ? 'Sugestões geradas' : 'Pronto para nova busca';
+  statusSubtitle.textContent = data.cta ? `Próximo passo: ${data.cta}` : 'Base carregada.';
 }
 
 async function sendMessage(message) {
@@ -37,8 +67,13 @@ async function sendMessage(message) {
   });
   const data = await res.json();
   addMessage('bot', data.reply || 'Sem resposta.');
-  statusTitle.textContent = data.recommendations?.length ? 'Sugestões geradas' : 'Pronto para nova busca';
-  statusSubtitle.textContent = data.cta ? `Próximo passo: ${data.cta}` : 'Base carregada.';
+
+  if (Array.isArray(data.sources) && data.sources.length) {
+    const sourceLines = data.sources.map((s) => `• ${s.title} — ${s.url}`);
+    addMessage('bot', `Fontes usadas:\n${sourceLines.join('\n')}`);
+  }
+
+  updateStatus(data);
 }
 
 form.addEventListener('submit', (ev) => {
@@ -56,5 +91,5 @@ document.querySelectorAll('[data-q]').forEach(btn => {
 (async function init() {
   addMessage('bot', 'Olá! Eu sou o SAOROQUE_XP. Me diga se você quer vinho, casal, família, 60+, sunset ou história em São Roque.');
   await loadKnowledge();
-  modePill.textContent = 'Modo local ativo';
+  modePill.textContent = 'Modo local';
 })();

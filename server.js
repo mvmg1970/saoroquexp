@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const { webFallback } = require('./services/web_fallback');
 
 const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
@@ -53,7 +54,7 @@ function normalize(text) {
   return String(text || '')
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[̀-ͯ]/g, '')
     .trim();
 }
 
@@ -82,14 +83,15 @@ function detectRoute(message) {
   return null;
 }
 
-function scoreExperience(exp, profileId, message) {
-  const profile = knowledge.perfis_publico.find(p => p.id === profileId);
+function scoreExperience(exp, profileId, routeId, message) {
+  const profile = profileId ? knowledge.perfis_publico.find(p => p.id === profileId) : null;
   const messageTokens = new Set(tokenize(message));
   const expTags = new Set(exp.perfis_recomendados || []);
   let score = 0;
   if (profile) {
     for (const tag of profile.tags) if (expTags.has(tag)) score += 2;
   }
+  if (routeId && exp.roteiro_id === routeId) score += 1;
   for (const tag of expTags) if (messageTokens.has(tag.replace(/_/g, ''))) score += 1;
   if (profileId === 'perf-60plus' && /leve|tranquilo|sem pressa|acess/.test(normalize(exp.descricao))) score += 1;
   if (profileId === 'perf-casais' && /romant|sunset|luar|jantar/.test(normalize(exp.descricao))) score += 1;
@@ -98,10 +100,10 @@ function scoreExperience(exp, profileId, message) {
 }
 
 function recommend(message) {
-  const profileId = inferProfile(message) || 'perf-amantes-vinho';
   const routeId = detectRoute(message);
+  const profileId = inferProfile(message) || (routeId === 'RV' ? 'perf-amantes-vinho' : null);
   const entries = knowledge.experiencias
-    .map(exp => ({ exp, score: scoreExperience(exp, profileId, message) }))
+    .map(exp => ({ exp, score: scoreExperience(exp, profileId, routeId, message) }))
     .filter(item => item.score >= 2)
     .sort((a, b) => b.score - a.score)
     .slice(0, 3)
@@ -116,22 +118,10 @@ function recommend(message) {
     }));
 
   const route = routeId ? knowledge.roteiros.find(r => r.id === routeId) : null;
-  return { profileId, routeId, route, recommendations: entries };
+  return { profileId, routeId, route, recommendations: entries, maxScore: entries[0]?.score || 0 };
 }
 
-function buildReply(message) {
-  const text = String(message || '').trim();
-  if (!text) {
-    return {
-      reply: 'Me diga seu perfil ou interesse — por exemplo: vinhos, casais, família, 60+ ou sunset.',
-      cta: 'Explorar sugestões',
-      profile: null,
-      route: null,
-      recommendations: [],
-    };
-  }
-
-  const rec = recommend(text);
+function buildLocalReply(message, rec) {
   const routeName = rec.route ? rec.route.nome : null;
   const profileLabel = rec.profileId ? (knowledge.perfis_publico.find(p => p.id === rec.profileId)?.nome || rec.profileId) : 'público geral';
 
@@ -144,7 +134,7 @@ function buildReply(message) {
     const lines = rec.recommendations.map((item, i) => `${i + 1}. **${item.nome}** — ${item.descricao}`);
     reply += `\n\nMinhas melhores sugestões:\n${lines.join('\n')}`;
   } else {
-    reply += '\n\nNão achei uma experiência com match forte. Posso filtrar por vinho, sunset, família, casais ou história.';
+    reply += '\n\nNão achei uma experiência com match forte na base local. Posso filtrar por vinho, sunset, família, casais ou história.';
   }
 
   return {
@@ -153,6 +143,53 @@ function buildReply(message) {
     route: routeName,
     recommendations: rec.recommendations,
     cta: rec.recommendations.length ? 'Quero atendimento humano' : 'Refinar busca',
+    source_mode: 'local',
+    sources: [],
+  };
+}
+
+async function buildReply(message) {
+  const text = String(message || '').trim();
+  if (!text) {
+    return {
+      reply: 'Me diga seu perfil ou interesse — por exemplo: vinhos, casais, família, 60+ ou sunset.',
+      cta: 'Explorar sugestões',
+      profile: null,
+      route: null,
+      recommendations: [],
+      source_mode: 'local',
+      sources: [],
+    };
+  }
+
+  const rec = recommend(text);
+  const strongLocalMatch = rec.recommendations.length > 0 || rec.route || rec.maxScore >= 3;
+
+  if (strongLocalMatch) {
+    return buildLocalReply(text, rec);
+  }
+
+  const web = await webFallback(text);
+  if (web) {
+    return {
+      reply: web.reply,
+      profile: rec.profileId,
+      route: rec.route ? rec.route.nome : null,
+      recommendations: [],
+      cta: 'Quero atendimento humano',
+      source_mode: 'web',
+      sources: web.sources || [],
+    };
+  }
+
+  return {
+    reply: 'Não encontrei cobertura suficiente na base local nem em fontes web confiáveis agora. Tente reformular com mais detalhes, como local, atração ou período do passeio.',
+    cta: 'Refinar busca',
+    profile: rec.profileId,
+    route: rec.route ? rec.route.nome : null,
+    recommendations: [],
+    source_mode: 'local',
+    sources: [],
   };
 }
 
@@ -194,14 +231,14 @@ async function handler(req, res) {
 
   if (req.method === 'GET' && pathname === '/api/suggestions') {
     const q = url.searchParams.get('q') || '';
-    return send(res, 200, buildReply(q));
+    return send(res, 200, await buildReply(q));
   }
 
   if (req.method === 'POST' && pathname === '/api/chat') {
     try {
       const body = await jsonBody(req);
       const message = body.message || body.text || '';
-      return send(res, 200, buildReply(message));
+      return send(res, 200, await buildReply(message));
     } catch (err) {
       return send(res, 400, { ok: false, error: 'invalid_json', message: err.message });
     }
