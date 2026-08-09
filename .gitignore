@@ -5,3 +5,4 @@ npm-debug.log*
 dist/
 coverage/
 .render-build/
+data/uncovered_questions.jsonl
