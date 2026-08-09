@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { webFallback } = require('./services/web_fallback');
+const { appendUncoveredQuestion, readUncoveredQuestions } = require('./services/curation_queue');
 
 const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
@@ -54,7 +55,7 @@ function normalize(text) {
   return String(text || '')
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .trim();
 }
 
@@ -121,10 +122,9 @@ function recommend(message) {
   return { profileId, routeId, route, recommendations: entries, maxScore: entries[0]?.score || 0 };
 }
 
-function buildLocalReply(message, rec) {
+function buildLocalReply(rec) {
   const routeName = rec.route ? rec.route.nome : null;
   const profileLabel = rec.profileId ? (knowledge.perfis_publico.find(p => p.id === rec.profileId)?.nome || rec.profileId) : 'público geral';
-
   const introParts = [];
   if (routeName) introParts.push(`Pelo que você pediu, o roteiro mais indicado é **${routeName}**.`);
   introParts.push(`Pensei no perfil **${profileLabel}**.`);
@@ -166,11 +166,20 @@ async function buildReply(message) {
   const strongLocalMatch = rec.recommendations.length > 0 || rec.route || rec.maxScore >= 3;
 
   if (strongLocalMatch) {
-    return buildLocalReply(text, rec);
+    return buildLocalReply(rec);
   }
 
   const web = await webFallback(text);
   if (web) {
+    appendUncoveredQuestion({
+      query: text,
+      status: 'resolved_by_web',
+      source_mode: 'web',
+      sources_count: web.sources?.length || 0,
+      route: rec.route ? rec.route.nome : null,
+      profile: rec.profileId,
+      request_id: web.request_id || null,
+    });
     return {
       reply: web.reply,
       profile: rec.profileId,
@@ -179,8 +188,18 @@ async function buildReply(message) {
       cta: 'Quero atendimento humano',
       source_mode: 'web',
       sources: web.sources || [],
+      answer: web.answer || null,
     };
   }
+
+  appendUncoveredQuestion({
+    query: text,
+    status: 'no_coverage',
+    source_mode: 'local',
+    sources_count: 0,
+    route: rec.route ? rec.route.nome : null,
+    profile: rec.profileId,
+  });
 
   return {
     reply: 'Não encontrei cobertura suficiente na base local nem em fontes web confiáveis agora. Tente reformular com mais detalhes, como local, atração ou período do passeio.',
@@ -232,6 +251,10 @@ async function handler(req, res) {
   if (req.method === 'GET' && pathname === '/api/suggestions') {
     const q = url.searchParams.get('q') || '';
     return send(res, 200, await buildReply(q));
+  }
+
+  if (req.method === 'GET' && pathname === '/api/curation/uncovered') {
+    return send(res, 200, { items: readUncoveredQuestions(100) });
   }
 
   if (req.method === 'POST' && pathname === '/api/chat') {

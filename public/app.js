@@ -46,7 +46,13 @@ function updateStatus(data) {
   if (data.source_mode === 'web') {
     modePill.textContent = 'Modo online';
     statusTitle.textContent = 'Resposta buscada na web';
-    statusSubtitle.textContent = 'Fontes confiáveis usadas para complementar a base local.';
+    statusSubtitle.textContent = 'A resposta veio só de fontes confiáveis e foi salva para curadoria.';
+    return;
+  }
+  if (data.source_mode === 'local' && !data.recommendations?.length) {
+    modePill.textContent = 'Modo local';
+    statusTitle.textContent = 'Sem cobertura local';
+    statusSubtitle.textContent = 'A pergunta foi registrada para virar nova base de conhecimento.';
     return;
   }
 
